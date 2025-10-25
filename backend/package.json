@@ -1,0 +1,21 @@
+{
+  "name": "my-zkir-backend",
+  "version": "1.0.0",
+  "description": "My.Zkir Islamic App Backend API",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "islamic",
+    "dua",
+    "prayer",
+    "muslim",
+    "api"
+  ],
+  "author": "My.Zkir Team",
+  "license": "ISC",
+  "type": "commonjs"
+}
