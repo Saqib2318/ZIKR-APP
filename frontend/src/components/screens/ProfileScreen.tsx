@@ -1,5 +1,7 @@
 "use client";
 
+import { ArrowRight } from "lucide-react";
+
 interface ProfileScreenProps {
   // Props for state management
   userName: string;
@@ -14,6 +16,7 @@ export default function ProfileScreen({
   setShowInteriorDesignSettings,
   setShowHomeScreen,
 }: ProfileScreenProps) {
+
   return (
     <div className="flex-1 flex flex-col min-h-screen w-full max-w-none overflow-hidden">
       {/* Header with Back Arrow - Mobile Responsive */}
@@ -104,7 +107,9 @@ export default function ProfileScreen({
                     {option.description}
                   </p>
                 </div>
-                <span className="text-white text-xl">→</span>
+                <span className="text-white text-xl">
+                  <ArrowRight/>
+                </span>
               </button>
             ))}
           </div>

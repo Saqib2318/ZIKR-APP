@@ -1,7 +1,8 @@
 "use client";
 
-import React from 'react';
+import React,{useState} from 'react';
 import Image from 'next/image';
+import { BookMarked, Copy, Pencil, Upload } from 'lucide-react';
 
 interface DuaContentViewerScreenProps {
   profileDuaContent: Record<string, {
@@ -26,13 +27,14 @@ const DuaContentViewerScreen: React.FC<DuaContentViewerScreenProps> = ({
   setShowHomeScreen,
   handleDiscussClick,
 }) => {
+  const [toggleMoreMenu,setToggleMoreMenu]=useState<boolean>(false)
   return (
     <div className="flex-1 flex flex-col min-h-screen w-full max-w-none bg-gradient-to-b from-[#0D4A42] to-[#0B1E3A] overflow-hidden">
       {/* Header/Top Bar - Like in image */}
       <div className="flex items-center justify-between w-full px-3 sm:px-4 py-3 sm:py-4">
         {/* Left: Back arrow and green leaf icon - Mobile Responsive */}
         <div className="flex items-center space-x-2 sm:space-x-4">
-          {/* <button
+          <button
             onClick={() => {
               setShowAuthenticDuaSelection(false);
               setShowHomeScreen(true);
@@ -42,45 +44,11 @@ const DuaContentViewerScreen: React.FC<DuaContentViewerScreenProps> = ({
             <Image
               src="/arrow.svg"
               alt="ArrowImage"
-     height="200" width="200"         className="h-6 w-6 rotate-180"
+     height="200" width="200"     className="h-6 w-6 rotate-180"
             />
-          </button> */}
-          <button
-            onClick={() => setShowDiscussMenu(true)}
-            className="hover:scale-110 transition-transform absolute top-2 left-2"
-          >
-            <Image src="/leave.png" alt="Leave"
-              width="200"
-              height="200" className="w-10 h-10" />
-          </button>
+          </button> 
         </div>
-
-        {/* Title - Mobile Responsive */}
-        <div className='w-full absolute top-12 left-0 h-fit px-1 py-1 bg-green-900 flex justify-start items-center'>
-          <button
-           onClick={() => {
-              setShowAuthenticDuaSelection(false);
-              setShowHomeScreen(true);
-            }}
-            className="text-white text-xl sm:text-2xl hover:text-gray-300 transition-colors"
-          >
-            <Image
-              src="/arrow.svg"
-              alt="ArrowImage"
-              height="200" width="200" className="h-6 w-6 rotate-180"
-            />
-          </button>
-          <h1 className="text-white text-lg sm:text-lg md:text-lg font-semibold sm:font-medium text-center  px-2">
-            {profileDuaContent[
-              selectedDuaCategory as keyof typeof profileDuaContent
-            ]?.title || selectedDuaCategory}
-          </h1>
-          <button className="text-white text-sm sm:text-lg md:text-lg hover:text-gray-300 transition-colors self-end ml-[calc(40%-0px)]">
-            <span className='font-bold text-3xl'>⋯</span>
-          </button>
-        </div>
-
-        {/* Right Icons - Like in image - Mobile Responsive */}
+ {/* Right Icons - Like in image - Mobile Responsive */}
         <div className="flex items-center space-x-1 sm:space-x-2 md:space-x-3 absolute top-4 right-0">
           <button className="text-white text-md sm:text-lg md:text-lg hover:text-gray-300 transition-colors">
             <svg
@@ -126,8 +94,35 @@ const DuaContentViewerScreen: React.FC<DuaContentViewerScreenProps> = ({
           </button>
 
         </div>
-      </div>
-
+        </div>
+        {/* Title - Mobile Responsive */}
+        <div className='w-full h-fit px-1 py-1 bg-green-900 flex justify-start items-center'>
+          <h1 className="text-white text-lg sm:text-lg md:text-lg font-semibold sm:font-medium text-center  px-2">
+            {profileDuaContent[
+              selectedDuaCategory as keyof typeof profileDuaContent
+            ]?.title || selectedDuaCategory}
+          </h1>
+          <button className="text-white text-sm sm:text-lg md:text-lg hover:text-gray-300 transition-colors self-end ml-[calc(40%-0px)]" 
+          onClick={()=>{
+            setToggleMoreMenu(!toggleMoreMenu)
+          }}>
+            <span className='font-bold text-3xl'>⋯</span>
+            <div className='px-4 py-3 border-'>
+              <button>
+                  <span>Favori</span><BookMarked/>
+              </button>
+              <button>
+                <span>Note</span><Pencil/>
+              </button>
+              <button>
+                <span>Copier</span><Copy/>
+              </button>
+              <button>
+                  <span>Partager</span><Upload/>
+              </button>
+            </div>
+          </button>
+        </div>
       {/* Dua Content Display - Scrollable - Like in image - Mobile Responsive */}
       <div className="flex-1 overflow-y-auto mt-20">
         <div className="px-3 sm:px-4 pb-0">

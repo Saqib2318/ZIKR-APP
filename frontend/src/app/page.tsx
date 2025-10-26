@@ -73,6 +73,7 @@ export default function Home() {
   const [isLogin, setIsLogin] = useState(false);
   const [showEmailForm, setShowEmailForm] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [showProfileScreen,setShowProfileScreen]=useState(false)
   const [showWelcomeAdnanScreen, setShowWelcomeAdnanScreen] = useState(false);
   const [showSuccessScreen, setShowSuccessScreen] = useState(false);
   const [showWelcomeScreen, setShowWelcomeScreen] = useState(false);
@@ -120,7 +121,7 @@ export default function Home() {
   const [showGeneratedDua, setShowGeneratedDua] = useState(false);
   const [showFeelingSelector, setShowFeelingSelector] = useState(false);
   const [audioProgress, setAudioProgress] = useState(0);
-  const [zikrPremium,setZikrPremium]=useState(false)
+  const [showZikrPremium,setShowZikrPremium]=useState(false)
   const [userSettings, setUserSettings] = useState({
     name: "Adnan Fida",
     language: "English",
@@ -200,7 +201,7 @@ export default function Home() {
     setShowGeneratedDua(false);
     setShowLeavesMenu(false);
     setShowFeelingSelector(false);
-
+    if (screenName !== 'zikrPremium') setShowZikrPremium(false)
     // Update navigation history
     setNavigationHistory((prev) => [...prev, screenName]);
     setCurrentScreen(screenName);
@@ -231,13 +232,14 @@ export default function Home() {
         setActiveTab("Douas");
         break;
       case "reminder":
-        setShowHomeScreen(true);
+        // setShowHomeScreen(true);
         setActiveTab("Reminder");
         setShowReminderContent(true)
         break;
       case "profile":
-        setShowHomeScreen(true);
+        // setShowHomeScreen(true);
         setActiveTab("Profile");
+        setShowProfileScreen(true);
         break;
       case "wall-of-duas":
         console.log("Setting Wall of Duas states...");
@@ -251,20 +253,20 @@ export default function Home() {
       case "authentic-dua-selection":
         setShowAuthenticDuaSelection(true);
         break;
-      case "custom-dua-generation":
-        setShowCustomDuaGeneration(true);
+        case "custom-dua-generation":
+          setShowCustomDuaGeneration(true);
         break;
-      case "spiritual-reminder":
+        case "spiritual-reminder":
         setShowSpiritualReminder(true);
         if (options.category && typeof options.category === "string") {
           setSelectedReminderCategory(options.category);
         }
         break;
-      case "authentic-duas-grid":
-        setShowAuthenticDuasGrid(true);
-        break;
-      case "chatbot-discussion-hub":
-        setShowChatbotDiscussionHub(true);
+        case "authentic-duas-grid":
+          setShowAuthenticDuasGrid(true);
+          break;
+          case "chatbot-discussion-hub":
+            setShowChatbotDiscussionHub(true);
         break;
       case "dua-content-viewer":
         setShowDuaContentViewer(true);
@@ -275,18 +277,24 @@ export default function Home() {
       case "interior-design-settings":
         setShowInteriorDesignSettings(true);
         break;
-      case "matin-soir-details":
-        setShowMatinSoirDetails(true);
+        case "matin-soir-details":
+          setShowMatinSoirDetails(true);
         break;
       case "write-dua":
         setShowWriteDuaScreen(true);
         break;
-      case "email-form":
+        case "email-form":
         setShowEmailForm(true);
         break;
       case "zikrPremium":
-        setZikrPremium(true);
+        // setShowHomeScreen(true);
+        setActiveTab("My.Zikr+");
+        setShowZikrPremium(true);
         break;
+       case 'discuss':
+        setActiveTab('discuss')
+        handleDiscussClick()
+        break 
       default:
         console.warn("Unknown screen:", screenName);
         // Fallback to auth screen
@@ -422,6 +430,7 @@ export default function Home() {
         break;
       case "Discuss":
         handleDiscussClick();
+        navigateToScreen('discuss')
         break;
       case "Profile":
         navigateToScreen("profile");
@@ -1136,13 +1145,14 @@ export default function Home() {
         !showAuthenticDuaSelection &&
         !showCustomDuaGeneration &&
         !showSpiritualReminder &&
+        !showReminderContent&&
         !showAuthenticDuasGrid &&
         !showChatbotDiscussionHub &&
         !showDuaContentViewer &&
         !showInteriorDesignSettings &&
         !showMatinSoirDetails &&
         !showWelcomeAdnanScreen &&
-        !zikrPremium&&
+        !showZikrPremium&&
         !showSuccessScreen ? (
         <AuthScreen
           isLogin={isLogin}
@@ -1157,7 +1167,7 @@ export default function Home() {
           setIsAuthenticated={setIsAuthenticated}
           setShowWelcomeAdnanScreen={setShowWelcomeAdnanScreen}
         />
-      ) : showHomeScreen && !showWallOfDuas ? (
+      ) : showHomeScreen && !showWallOfDuas && activeTab === 'Home' ? (
         <HomeDouasTabsScreen
           activeTab={activeTab}
           setActiveTab={setActiveTab}
@@ -1202,7 +1212,7 @@ export default function Home() {
           navigateToScreen={ navigateToScreen}
           handleDuaAction={ handleDuaAction}
         />
-      ) : activeTab === "Reminder" && showHomeScreen ? (
+      ) : activeTab === "Reminder" ? (
         <ReminderTabScreen
           activeTab={activeTab}
           setActiveTab={setActiveTab}
@@ -1214,7 +1224,7 @@ export default function Home() {
           handleLeavesMenuToggle={handleLeavesMenuToggle}
           showLeavesMenu={showLeavesMenu}
         />
-      ) : activeTab === "Profile" && showHomeScreen ? (
+      ) : activeTab === "Profile" && showProfileScreen ? (
         <>
           <ProfileScreen
             userName={userName}
@@ -1222,7 +1232,7 @@ export default function Home() {
             setShowHomeScreen={setShowHomeScreen}
             setActiveTab={setActiveTab}
           />
-          <AuthenticDuaCategoriesScreen
+          {/* <AuthenticDuaCategoriesScreen
             setShowDiscussMenu={setShowDiscussMenu}
             handleBackFromAuthenticDuaCategories={handleBackFromAuthenticDuaCategories}
             selectedDuaCategory={selectedDuaCategory}
@@ -1231,7 +1241,7 @@ export default function Home() {
             duaContentRef={duaContentRef}
             duaContent={duaContent}
             handleToProtectKidsDuaAction={handleToProtectKidsDuaAction}
-          />
+          /> */}
         </>
       ) : showAuthenticDuaCategories ? (
         <AuthenticDuaCategoriesScreen
@@ -1390,10 +1400,13 @@ export default function Home() {
           handleDiscussClick={handleDiscussClick}
           handleBackFromInteriorDesignSettings={handleBackFromInteriorDesignSettings}
         />
-      ) : zikrPremium ? (
+      ) : activeTab === "My.Zikr+" && showZikrPremium ? (
       <ZikrPremiumSubscriptionScreen
         isAuthenticated={isAuthenticated}
         showWelcomeScreen={showWelcomeScreen}
+        handleLeavesMenuToggle={handleLeavesMenuToggle}
+        showLeavesMenu={showLeavesMenu}
+        setShowDiscussMenu={setShowDiscussMenu}
       />
       
       ): (

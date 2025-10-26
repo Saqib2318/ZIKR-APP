@@ -78,7 +78,7 @@ export default function WallOfDuasScreen({
                     // Handle back navigation - would need to be passed as prop
                     console.log("Back button clicked");
                   }}
-                  className="text-white text-xl sm:text-2xl hover:text-gray-300 transition-colors absolute top-6 sm:left-16 left-20"
+                  className="text-white text-xl sm:text-2xl hover:text-gray-300 transition-colors absolute top-6 left-16"
                 >
                   <Image
                     src={'/arrow.svg'}
