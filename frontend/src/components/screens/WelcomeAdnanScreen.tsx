@@ -63,7 +63,7 @@ export default function WelcomeAdnanScreen({
             <Image 
               width={200}
               height={200}
-              src={Logo} alt="Logo-Image" width="100" height="100" />
+              src={Logo} alt="Logo-Image"  />
           </div>
         </div>
 
