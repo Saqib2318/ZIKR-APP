@@ -33,6 +33,7 @@ interface WallOfDuasScreenProps {
   formatAmineCount: (count: number) => string;
   navigateToScreen: (screen: string, options?: Record<string, string | boolean | number>) => void;
   handleDuaAction: (action: string) => void;
+  setActiveTab:(value:string)=>void;
 }
 
 export default function WallOfDuasScreen({
@@ -50,6 +51,7 @@ export default function WallOfDuasScreen({
   formatAmineCount,
   navigateToScreen,
   handleDuaAction,
+  setActiveTab
 }: WallOfDuasScreenProps) {
   return (
     <>
@@ -77,6 +79,7 @@ export default function WallOfDuasScreen({
                   onClick={() => {
                     // Handle back navigation - would need to be passed as prop
                     console.log("Back button clicked");
+                    setActiveTab('Home')
                   }}
                   className="text-white text-xl sm:text-2xl hover:text-gray-300 transition-colors absolute top-6 left-16"
                 >
@@ -274,7 +277,9 @@ export default function WallOfDuasScreen({
             </button>
 
             {/* Ask for doua */}
-            <button className="w-fit bg-[#173b2a] border border-[#0f1944] text-white p-2 px-4 rounded-full font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]">
+            <button
+            onClick={() => navigateToScreen("ask-dua", {})}
+             className="w-fit bg-[#173b2a] border border-[#0f1944] text-white p-2 px-4 rounded-full font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]">
               Ask for doua
             </button>
 

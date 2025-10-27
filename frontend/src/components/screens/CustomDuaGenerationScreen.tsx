@@ -66,7 +66,7 @@ export default function CustomDuaGenerationScreen({
             height={200}
             src="/Pray.svg"
             alt="Pray"
-            className="w-6 h-6 sm:w-4 sm:w-4"
+            className="w-6 h-6 sm:w-4 sm:h-4"
           />
           <span className="text-[14px] sm:text-[13px] font-medium mt-1">
             Custom dua for my situation

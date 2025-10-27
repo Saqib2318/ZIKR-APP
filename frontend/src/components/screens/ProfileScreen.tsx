@@ -1,6 +1,8 @@
 "use client";
 
 import { ArrowRight } from "lucide-react";
+import Footer from "../mainComponents/footer";
+import { useEffect } from "react";
 
 interface ProfileScreenProps {
   // Props for state management
@@ -8,25 +10,24 @@ interface ProfileScreenProps {
   setActiveTab: (tab: string) => void;
   setShowInteriorDesignSettings: (value: boolean) => void;
   setShowHomeScreen: (value: boolean) => void;
+  activeTab:string
 }
 
 export default function ProfileScreen({
   userName,
   setActiveTab,
+  activeTab,
   setShowInteriorDesignSettings,
   setShowHomeScreen,
 }: ProfileScreenProps) {
-
+useEffect(() => {
+  setActiveTab('Profile');
+}, [setActiveTab]);
   return (
     <div className="flex-1 flex flex-col min-h-screen w-full max-w-none overflow-hidden">
       {/* Header with Back Arrow - Mobile Responsive */}
-      <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 mb-3 sm:mb-4">
-        <button
-          onClick={() => setActiveTab("Home")}
-          className="text-white text-xl sm:text-2xl hover:text-green-400 transition-colors"
-        >
-          ←
-        </button>
+      <div className="flex items-center justify-center px-4 sm:px-6 py-3 sm:py-4 mb-3 sm:mb-4">
+       
         <h1 className="text-xl sm:text-2xl text-white font-bold">
           My Profile
         </h1>
@@ -115,6 +116,7 @@ export default function ProfileScreen({
           </div>
         </div>
       </div>
+      <Footer setActiveTab={setActiveTab} activeTab={activeTab}/>
     </div>
   );
 }

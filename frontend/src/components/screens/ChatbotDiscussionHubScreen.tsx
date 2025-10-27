@@ -29,7 +29,7 @@ const ChatbotDiscussionHubScreen: React.FC<ChatbotDiscussionHubScreenProps> = ({
   return (
     <div className="flex-1 flex flex-col min-h-screen w-full max-w-none overflow-hidden">
       {/* Header/Top Bar */}
-      <div className="flex items-center justify-between w-full px-6 py-4 mb-8 pt-8 sm:pt-4">
+      <div className="flex items-center justify-between w-full px-6 py-4 mb-8  sm:pt-4">
         {/* Left: Back arrow and green leaf icon */}
         <div className="flex items-center space-x-2 sm:space-x-4">
           <button
@@ -72,7 +72,7 @@ height="200" className="w-10 h-10" />
         </div>
 
         {/* Center Title Pill */}
-        <div className="bg-[#35458a] border border-[#173b2a] rounded-full px-8 sm:px-4 py-4 sm:py-2 flex gap-2 items-center justify-center space-x-1 sm:space-x-2 ml-8 sm:ml-0 sm:mt-0 mt-4">
+        <div className="bg-[#35458a] border border-[#173b2a] rounded-full px-8 sm:px-4 py-4 sm:py-2 flex gap-2 items-center justify-center space-x-1 sm:space-x-2 ml-8 sm:ml-0">
           <Image 
               width={200}
               height={200}

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Footer from "../mainComponents/footer";
 
 interface HomeDouasTabsScreenProps {
@@ -15,6 +15,7 @@ interface HomeDouasTabsScreenProps {
   setShowAuthenticDuasGrid: (show: boolean) => void;
   handleWallOfDuasClick: () => void;
   handleLeavesMenuToggle: () => void;
+  navigateToScreen:(value:string)=>void;
   showLeavesMenu: boolean;
 }
 
@@ -22,6 +23,7 @@ export default function HomeDouasTabsScreen({
   activeTab,
   setActiveTab,
   selectedDouaCategory,
+  navigateToScreen,
   setSelectedDouaCategory,
   customDouaText,
   setCustomDouaText,
@@ -31,13 +33,16 @@ export default function HomeDouasTabsScreen({
   handleLeavesMenuToggle,
   showLeavesMenu,
 }: HomeDouasTabsScreenProps) {
+  useEffect(()=>{
+    setActiveTab(activeTab)
+  },[activeTab])
   return (
     <>
       {/* Home Tab Screen */}
       {activeTab === "Home" && (
         <div className="flex-1 flex flex-col min-h-screen w-full max-w-none overflow-hidden">
           {/* Header with Back Arrow - Mobile Responsive */}
-          <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 mb-1 sm:mb-4">
+          <div className="flex items-center justify-between text-left sm:text-center px-4 sm:px-6 py-3 sm:py-4 mb-1 sm:mb-4">
 
             <h1 className="text-3xl sm:text-2xl text-white font-bold">Duas</h1>
 
@@ -101,7 +106,7 @@ export default function HomeDouasTabsScreen({
                   Most popular Douas asked
                 </h2>
 
-                <div className="flex  flex-wrap  sm:grid sm:grid-cols-2 gap-3">
+                <div className="flex  flex-wrap  sm:grid sm:grid-cols-2 sm:place-items-center gap-3">
                   {[
                     "I have an exam",
                     "I want to marry",
@@ -275,7 +280,7 @@ export default function HomeDouasTabsScreen({
           </div>
         </div>
       )}
-   <Footer/>
+   <Footer setActiveTab={setActiveTab} activeTab={activeTab}/>
       {/* Floating Leaves Menu Button - Mobile Responsive */}
       
     </>

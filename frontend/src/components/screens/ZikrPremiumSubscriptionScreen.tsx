@@ -35,7 +35,7 @@ export default function ZikrPremiumSubscriptionScreen(
                 {/* Header & Title Area */}
                 <div className="text-center mb-2 sm:mb-12">
                     {/* Arabic Title - Stylized Green Font */}
-                    <div className="flex items-center mb-4">
+                    <div className="flex items-center mb-4 w-full h-auto">
                         {/* <HeartIcon color='oklch(68.1% 0.162 75.834)' width={50} height={50} />
                         <h1 className="text-4xl font-bold mt-1 tracking-wider  text-yellow-600">
                             My.Zikr+
@@ -45,7 +45,7 @@ export default function ZikrPremiumSubscriptionScreen(
                         alt=''
                         width={'200'}
                         height={'200'}
-                        className='w-full h-full object-cover'
+                        className='w-60 sm:w-full h-full object-cover'
                         />
                     </div>
                 </div>
@@ -70,8 +70,8 @@ export default function ZikrPremiumSubscriptionScreen(
                             </ul>
                         </div>
                         <div className='w-full max-w-4xl flex flex-col gap-2 items-center justify-center'>
-                            <button className='text-md bg-amber-300 text-gray-600 font-medium px-10 py-4 rounded-4xl flex space-x-1 justify-center items-center'>
-                                <HeartIcon width={25} height={25} className=' text-amber-950'/><span className='text-lg font-semibold'>Découvrir Zikr+</span>
+                            <button className='text-md bg-amber-50 text-gray-600 font-medium px-10 py-4 rounded-4xl flex space-x-1 justify-center items-center'>
+                                <HeartIcon width={25} height={25} className=' text-amber-300'/><span className='text-lg font-semibold'>Découvrir Zikr+</span>
                             </button>
                             <button className='text-md bg-green-950 text-white font-medium px-6 py-4 rounded-4xl flex space-x-1 justify-center items-center'>
                                 <span className='text-lg font-semibold'>Continuer gratuitement</span>

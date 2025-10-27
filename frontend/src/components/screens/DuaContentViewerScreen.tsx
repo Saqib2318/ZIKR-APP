@@ -1,8 +1,9 @@
 "use client";
 
-import React,{useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { BookMarked, Copy, Pencil, Upload } from 'lucide-react';
+import { BookMarked, Copy, Ellipsis, Pencil, Upload } from 'lucide-react';
+import Footer from '../mainComponents/footer';
 
 interface DuaContentViewerScreenProps {
   profileDuaContent: Record<string, {
@@ -17,6 +18,8 @@ interface DuaContentViewerScreenProps {
   setShowAuthenticDuaSelection: (show: boolean) => void;
   setShowHomeScreen: (show: boolean) => void;
   handleDiscussClick: () => void;
+  setActivateTab:(value:string)=>void;
+  activeTab:string
 }
 
 const DuaContentViewerScreen: React.FC<DuaContentViewerScreenProps> = ({
@@ -25,32 +28,36 @@ const DuaContentViewerScreen: React.FC<DuaContentViewerScreenProps> = ({
   setShowDiscussMenu,
   setShowAuthenticDuaSelection,
   setShowHomeScreen,
+  setActivateTab,
+  activeTab,
   handleDiscussClick,
 }) => {
-  const [toggleMoreMenu,setToggleMoreMenu]=useState<boolean>(false)
+  const [toggleMoreMenu, setToggleMoreMenu] = useState<boolean>(false)
+
   return (
     <div className="flex-1 flex flex-col min-h-screen w-full max-w-none bg-gradient-to-b from-[#0D4A42] to-[#0B1E3A] overflow-hidden">
       {/* Header/Top Bar - Like in image */}
       <div className="flex items-center justify-between w-full px-3 sm:px-4 py-3 sm:py-4">
         {/* Left: Back arrow and green leaf icon - Mobile Responsive */}
-        <div className="flex items-center space-x-2 sm:space-x-4">
-          <button
-            onClick={() => {
-              setShowAuthenticDuaSelection(false);
-              setShowHomeScreen(true);
-            }}
-            className="text-white text-xl sm:text-2xl hover:text-gray-300 transition-colors absolute top-16 left-2"
-          >
-            <Image
-              src="/arrow.svg"
-              alt="ArrowImage"
-     height="200" width="200"     className="h-6 w-6 rotate-180"
-            />
-          </button> 
-        </div>
- {/* Right Icons - Like in image - Mobile Responsive */}
-        <div className="flex items-center space-x-1 sm:space-x-2 md:space-x-3 absolute top-4 right-0">
-          <button className="text-white text-md sm:text-lg md:text-lg hover:text-gray-300 transition-colors">
+
+        <button
+          onClick={() => {
+            setShowAuthenticDuaSelection(false);
+            setShowHomeScreen(false);
+            setActivateTab('Home');
+          }}
+          className="text-white text-xl sm:text-2xl hover:text-gray-300 transition-colors"
+        >
+          <Image
+            src="/arrow.svg"
+            alt="ArrowImage"
+            height="200" width="200" className="h-6 w-6 rotate-180"
+          />
+        </button>
+
+        {/* Right Icons - Like in image - Mobile Responsive */}
+        <div className="flex items-center space-x-1 sm:space-x-2 md:space-x-3">
+          {/* <button className="text-white text-md sm:text-lg md:text-lg hover:text-gray-300 transition-colors">
             <svg
               className="w-8 h-8 sm:w-5 sm:h-5"
               fill="none"
@@ -64,7 +71,7 @@ const DuaContentViewerScreen: React.FC<DuaContentViewerScreenProps> = ({
                 d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
               />
             </svg>
-          </button>
+          </button> */}
           <button className="text-white text-sm sm:text-lg md:text-lg hover:text-gray-300 transition-colors">
             <svg
               className="w-8 h-8 sm:w-5 sm:h-5"
@@ -94,35 +101,43 @@ const DuaContentViewerScreen: React.FC<DuaContentViewerScreenProps> = ({
           </button>
 
         </div>
-        </div>
-        {/* Title - Mobile Responsive */}
-        <div className='w-full h-fit px-1 py-1 bg-green-900 flex justify-start items-center'>
-          <h1 className="text-white text-lg sm:text-lg md:text-lg font-semibold sm:font-medium text-center  px-2">
-            {profileDuaContent[
-              selectedDuaCategory as keyof typeof profileDuaContent
-            ]?.title || selectedDuaCategory}
-          </h1>
-          <button className="text-white text-sm sm:text-lg md:text-lg hover:text-gray-300 transition-colors self-end ml-[calc(40%-0px)]" 
-          onClick={()=>{
+      </div>
+      {/* Title - Mobile Responsive */}
+      <div className='w-full h-fit px-4 py-2 relative bg-green-900 flex justify-between items-center'>
+        <h1 className="text-white text-xl sm:text-lg md:text-lg font-semibold sm:font-medium text-center">
+          {profileDuaContent[
+            selectedDuaCategory as keyof typeof profileDuaContent
+          ]?.title || selectedDuaCategory}
+        </h1>
+        <button className="text-white text-sm sm:text-lg md:text-lg hover:text-gray-300 transition-colors"
+          onClick={() => {
             setToggleMoreMenu(!toggleMoreMenu)
           }}>
-            <span className='font-bold text-3xl'>⋯</span>
-            <div className='px-4 py-3 border-'>
-              <button>
-                  <span>Favori</span><BookMarked/>
-              </button>
-              <button>
-                <span>Note</span><Pencil/>
-              </button>
-              <button>
-                <span>Copier</span><Copy/>
-              </button>
-              <button>
-                  <span>Partager</span><Upload/>
-              </button>
-            </div>
-          </button>
-        </div>
+          <span className='font-bold text-3xl'> <Ellipsis /></span>
+          {toggleMoreMenu && <div className='px-4 z-20 py-3 border- absolute -bottom-46 right-0 flex justify-between items-start flex-col w-60 h-fit bg-white rounded-2xl'>
+            <button className='flex items-center justify-between w-full border-b border-gray-400 py-1'>
+              <span className='text-gray-600 text-lg'>Favori</span><BookMarked className='text-green-900' />
+            </button>
+            <button className='flex items-center justify-between w-full border-b border-gray-400 py-1'>
+              <span className='text-gray-600 text-lg'>Note</span><Pencil className='text-green-900' />
+            </button>
+            <button className='flex items-center justify-between w-full border-b border-gray-400 py-1'>
+              <span className='text-gray-600 text-lg'>Copier</span><Copy className='text-green-900' />
+            </button>
+            <button className='flex items-center justify-between w-full py-1'>
+              <span className='text-gray-600 text-lg'>Partager</span><Upload className='text-green-900' />
+            </button>
+            <div className='absolute -top-3 right-2 w-8 h-10 bg-white'
+              style={{
+                // This creates the triangular shape that points out
+                clipPath: 'polygon(0 0, 100% 0, 100% 100%)',
+                transform: 'rotate(315deg)', // Position and rotate it
+                borderRadius: '0 0 4px 0', // Optional: slightly round the corner
+              }}
+            ></div>
+          </div>}
+        </button>
+      </div>
       {/* Dua Content Display - Scrollable - Like in image - Mobile Responsive */}
       <div className="flex-1 overflow-y-auto mt-20">
         <div className="px-3 sm:px-4 pb-0">
@@ -163,26 +178,19 @@ const DuaContentViewerScreen: React.FC<DuaContentViewerScreenProps> = ({
                       }
                     </p>
                   </div>
+   {/* Audio Controls - Like in image - Mobile Responsive */}
+            <div className="flex items-center justify-center space-x-2 sm:space-x-6 md:space-x-8 mb-12 sm:mb-16">
 
-                  {/* Source Reference - Mobile Responsive */}
-                  <div className="text-left mb-6 sm:mb-8">
-                    <p className="text-gray-500 text-xs sm:text-sm max-w-[270px] ml-auto">
-                      {
-                        profileDuaContent[
-                          selectedDuaCategory as keyof typeof profileDuaContent
-                        ].source
-                      }
-                    </p>
-                  </div>
-                </>
-              )}
-
-            {/* Audio Controls - Like in image - Mobile Responsive */}
-            <div className="flex items-center justify-center space-x-4 sm:space-x-6 md:space-x-8 mb-12 sm:mb-16">
+              {/* Heart Button - Mobile Responsive */}
+              <button className="text-white text-xl sm:text-2xl md:text-3xl hover:text-gray-300 transition-colors mr-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                </svg>
+              </button>
               {/* Previous Button - Mobile Responsive */}
               <button className="text-white text-xl sm:text-2xl md:text-3xl hover:text-gray-300 transition-colors">
                 <svg
-                  className="w-6 h-6 sm:w-8 sm:h-8"
+                  className="w-16 h-16 sm:w-8 sm:h-8"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
@@ -191,9 +199,9 @@ const DuaContentViewerScreen: React.FC<DuaContentViewerScreenProps> = ({
               </button>
 
               {/* Play/Pause Button - Large circular - Mobile Responsive */}
-              <button className="relative w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-full flex items-center justify-center text-black text-2xl sm:text-3xl hover:bg-gray-100 transition-colors shadow-lg">
+              <button className="relative w-20 h-20 sm:w-20 sm:h-20 bg-white rounded-full flex items-center justify-center text-black text-2xl sm:text-3xl hover:bg-gray-100 transition-colors shadow-lg">
                 <svg
-                  className="w-6 h-6 sm:w-8 sm:h-8 ml-1"
+                  className="w-16 h-16 sm:w-8 sm:h-8 ml-1"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
@@ -204,32 +212,38 @@ const DuaContentViewerScreen: React.FC<DuaContentViewerScreenProps> = ({
               {/* Next Button - Mobile Responsive */}
               <button className="text-white text-xl sm:text-2xl md:text-3xl hover:text-gray-300 transition-colors">
                 <svg
-                  className="w-6 h-6 sm:w-8 sm:h-8"
+                  className="w-16 h-16 sm:w-8 sm:h-8"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
                   <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" />
                 </svg>
               </button>
-            </div>
-
-            {/* Progress Indicator - Small teal circle */}
-            <div className="flex justify-center mb-8">
-              <div className="w-3 h-3 bg-teal-400 rounded-full"></div>
-            </div>
-
-            {/* Shuffle/Repeat Icon */}
-            <div className="flex justify-center mb-12">
-              <button className="text-white text-lg hover:text-gray-300 transition-colors">
-                <svg
-                  className="w-6 h-6"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z" />
+              <button className="text-white text-xl sm:text-2xl md:text-3xl hover:text-gray-300 transition-colors ml-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="12" y1="8" x2="12" y2="16" />
+                  <line x1="8" y1="12" x2="16" y2="12" />
                 </svg>
               </button>
             </div>
+                  {/* Source Reference - Mobile Responsive */}
+                  <div className="text-left mb-6 sm:mb-8">
+                    <p className="text-gray-500 text-xs sm:text-sm max-w-[270px]">
+                      {
+                        profileDuaContent[
+                          selectedDuaCategory as keyof typeof profileDuaContent
+                        ].source
+                      }
+                    </p>
+                  </div>
+                </>
+              )}
+
+         
+
+            {/* Progress Indicator - Small teal circle */}
+
           </div>
         </div>
       </div>
@@ -240,7 +254,7 @@ const DuaContentViewerScreen: React.FC<DuaContentViewerScreenProps> = ({
           onClick={() => {
             handleDiscussClick();
           }}
-          className="bg-[#35458a] w-fit ml-auto justify-end border border-[#173b2a] rounded-full px-4 sm:px-4 py-2 sm:py-2 flex gap-2 items-center justify-center space-x-1 sm:space-x-2"
+          className="bg-[#35458a] w-fit ml-auto  border border-[#173b2a] rounded-full px-4 sm:px-4 py-2 sm:py-2 flex gap-2 items-center justify-center space-x-1 sm:space-x-2"
         >
           <Image
             width={200}
@@ -255,6 +269,7 @@ const DuaContentViewerScreen: React.FC<DuaContentViewerScreenProps> = ({
             src="/arrow.svg" alt="Arrow" className="w-4 h-4" />
         </button>
       </div>
+      <Footer setActiveTab={setActivateTab} activeTab={activeTab}/>
     </div>
   );
 };

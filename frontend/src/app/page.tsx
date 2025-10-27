@@ -31,6 +31,7 @@ import ReminderScreen from "../components/screens/ReminderScreen";
 import AuthScreen from "../components/screens/AuthScreen";
 import HomeScreen from "../components/screens/HomeScreen";
 import ZikrPremiumSubscriptionScreen from "@/components/screens/ZikrPremiumSubscriptionScreen";
+import AskDuaScreen from "@/components/screens/AskForDuaScreen";
 
 // Assets
 // Note: Use string paths from public/ with next/image instead of server-root imports.
@@ -77,6 +78,7 @@ export default function Home() {
   const [showWelcomeAdnanScreen, setShowWelcomeAdnanScreen] = useState(false);
   const [showSuccessScreen, setShowSuccessScreen] = useState(false);
   const [showWelcomeScreen, setShowWelcomeScreen] = useState(false);
+  const [showAskDuaScreen,setShowAskDuaScreen] = useState(false);
   const [showPersonalizationScreen, setShowPersonalizationScreen] =
     useState(false);
   const [showHomeScreen, setShowHomeScreen] = useState(false);
@@ -107,6 +109,7 @@ export default function Home() {
   const [showMatinSoirDetails, setShowMatinSoirDetails] = useState(false);
   const [showWriteDuaScreen, setShowWriteDuaScreen] = useState(false);
   const [writeDuaText, setWriteDuaText] = useState("");
+  const [AskDuaText, setAskDuaText] = useState("");
   const [chatInput, setChatInput] = useState("");
   const [discussionInput, setDiscussionInput] = useState("");
   const [customMessage, setCustomMessage] = useState("");
@@ -171,7 +174,7 @@ export default function Home() {
   });
 
   // Centralized navigation function
-  const navigateToScreen = (
+const navigateToScreen = (
     screenName: string,
     options: Record<string, string | boolean | number> = {}
   ) => {
@@ -282,6 +285,9 @@ export default function Home() {
         break;
       case "write-dua":
         setShowWriteDuaScreen(true);
+        break;
+      case "ask-dua":
+        setShowAskDuaScreen(true);
         break;
         case "email-form":
         setShowEmailForm(true);
@@ -1145,6 +1151,7 @@ export default function Home() {
         !showAuthenticDuaSelection &&
         !showCustomDuaGeneration &&
         !showSpiritualReminder &&
+        !showAskDuaScreen &&
         !showReminderContent&&
         !showAuthenticDuasGrid &&
         !showChatbotDiscussionHub &&
@@ -1180,8 +1187,9 @@ export default function Home() {
           handleWallOfDuasClick={handleWallOfDuasClick}
           handleLeavesMenuToggle={handleLeavesMenuToggle}
           showLeavesMenu={showLeavesMenu}
+          navigateToScreen={navigateToScreen}
         />
-      ) : activeTab === "Douas" && showHomeScreen && !showWallOfDuas ? (
+      ) : !showHomeScreen && !showWallOfDuas && activeTab === 'Home' ? (
         <HomeDouasTabsScreen
           activeTab={activeTab}
           setActiveTab={setActiveTab}
@@ -1194,6 +1202,22 @@ export default function Home() {
           handleWallOfDuasClick={handleWallOfDuasClick}
           handleLeavesMenuToggle={handleLeavesMenuToggle}
           showLeavesMenu={showLeavesMenu}
+          navigateToScreen={navigateToScreen}
+        />
+      ) : activeTab === "Douas" && !showHomeScreen ? (
+        <HomeDouasTabsScreen
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          selectedDouaCategory={selectedDouaCategory}
+          setSelectedDouaCategory={setSelectedDouaCategory}
+          customDouaText={customDouaText}
+          setCustomDouaText={setCustomDouaText}
+          showAuthenticDuasGrid={showAuthenticDuasGrid}
+          setShowAuthenticDuasGrid={setShowAuthenticDuasGrid}
+          handleWallOfDuasClick={handleWallOfDuasClick}
+          handleLeavesMenuToggle={handleLeavesMenuToggle}
+          showLeavesMenu={showLeavesMenu}
+          navigateToScreen={navigateToScreen}
         />
       ) : activeTab ==='wallOfDua' && showWallOfDuas ? (
         <WallOfDuasScreen
@@ -1211,6 +1235,7 @@ export default function Home() {
           formatAmineCount={formatAmineCount}
           navigateToScreen={ navigateToScreen}
           handleDuaAction={ handleDuaAction}
+          setActiveTab={setActiveTab}
         />
       ) : activeTab === "Reminder" ? (
         <ReminderTabScreen
@@ -1231,6 +1256,7 @@ export default function Home() {
             setShowInteriorDesignSettings={setShowInteriorDesignSettings}
             setShowHomeScreen={setShowHomeScreen}
             setActiveTab={setActiveTab}
+            activeTab={activeTab}
           />
           {/* <AuthenticDuaCategoriesScreen
             setShowDiscussMenu={setShowDiscussMenu}
@@ -1367,6 +1393,16 @@ export default function Home() {
           handlePublishDua={handlePublishDua}
           setShowDiscussMenu={setShowDiscussMenu}
         />
+      ) : showAskDuaScreen  ? (
+        <AskDuaScreen
+          AskDuaText={AskDuaText}
+          setWriteDuaText={setWriteDuaText}
+          setShowAskDuaScreen={setShowAskDuaScreen}
+          setShowHomeScreen={setShowHomeScreen}
+          handlePublishDua={handlePublishDua}
+          setShowDiscussMenu={setShowDiscussMenu}
+          setActiveTab={setActiveTab}
+        />
       ) : showChatbotDiscussionHub ? (
         <ChatbotDiscussionHubScreen
           chatInput={chatInput}
@@ -1387,6 +1423,8 @@ export default function Home() {
           setShowAuthenticDuaSelection={setShowAuthenticDuaSelection}
           setShowHomeScreen={setShowHomeScreen}
           handleDiscussClick={handleDiscussClick}
+          setActivateTab={setActiveTab}
+          activeTab={activeTab}
         />
       ) : showInteriorDesignSettings ? (
         <InteriorDesignSettingsScreen

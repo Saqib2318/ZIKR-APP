@@ -33,7 +33,7 @@ export default function ReminderTabScreen({
     <div className="flex-1 flex flex-col min-h-screen w-full max-w-none overflow-hidden">
       {/* Header with Back Arrow - Mobile Responsive */}
       <div className="max-w-4xl sm:mx-auto w-full mt-4 flex justify-center items-center">
-        <div className="bg-white cursor-pointer text-gray-800 border-2 border-gray-300  sm:px-4 px-6 py-4 sm:py-6 rounded-[999px] flex flex-row items-center justify-center transition-all duration-300 transform hover:scale-105 hover:bg-gray-100 shadow-lg w-1/2 capitalize"
+        <div className="bg-white cursor-pointer text-gray-800 border-2 border-gray-300  sm:px-4 px-8 py-2 sm:py-6 rounded-[999px] flex flex-row items-center justify-center transition-all duration-300 transform hover:scale-105 hover:bg-gray-100 shadow-lg sm:w-1/2 w-2/3 capitalize"
                  >
                    <Image
                      src='/spritual-reminder.png'
@@ -42,7 +42,7 @@ export default function ReminderTabScreen({
                      alt="SpritualReminder"
                      className="w-6 h-6"
                    />
-                   <span className="text-md sm:text-sm font-bold  mt-1">
+                   <span className="sm:text-sm text-md font-bold  mt-1">
                      Spiritual reminder
                    </span>
                  </div>
