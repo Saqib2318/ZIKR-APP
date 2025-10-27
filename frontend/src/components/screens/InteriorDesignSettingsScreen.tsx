@@ -40,8 +40,8 @@ const InteriorDesignSettingsScreen: React.FC<InteriorDesignSettingsScreenProps> 
   handleDiscussClick,
   handleBackFromInteriorDesignSettings,
 }) => {
-  let min = 0;
-  let max = 100;
+  const min = 0;
+  const max = 100;
   const percentage = ((userSettings.textSize - min) / (max - min)) * 100;
 
   // 3. Define the dynamic background style
