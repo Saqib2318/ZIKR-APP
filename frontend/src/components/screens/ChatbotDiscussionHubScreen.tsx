@@ -128,9 +128,9 @@ height="200" className="w-10 h-10" />
               {/* Chat Bubble */}
               {/* <div className="bg-teal-800 bg-opacity-80 rounded-2xl rounded-tl-sm p-6 max-w-2xl">
                 <p className="text-white text-base leading-relaxed">
-                  That&apos;s great! Please find below the Reminders I can
+                  {"That's great! Please find below the Reminders I can
                   help you with. May Allah ease your journey and help you
-                  memorise them. Amine
+                  memorise them. Amine"}
                 </p>
               </div> */}
           {/* <div className="w-full max-w-4xl mx-auto mb-8 px-6">
